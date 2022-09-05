@@ -2,6 +2,8 @@
 
 using namespace std;
 
+
+
 using uint = unsigned int;
 
 // Pre: 0 <= mes < 12
@@ -94,6 +96,7 @@ public:
     Horario(uint Hora,uint min);
     uint hora();
     uint min();
+    bool operator<(Horario h);
 private:
     uint _hora;
     uint _min;
@@ -117,11 +120,53 @@ os <<  h.hora() << ":" << h.min();
 return os;
 }
 
+bool Horario::operator<(Horario h) {
+    bool hora_menor = this->hora()<h.hora();
+    bool hora_igual = this->hora() == h.hora();
+    bool min_menor = this-> min() < h.min();
+    return hora_menor || (hora_igual && min_menor);
 
+}
 
 
 
 // Ejercicio 13
+class Recordatorio{
+public:
+    Recordatorio(Fecha f, Horario h,string mensaje);
+    string mensaje();
+    Fecha fecha();
+    Horario horario();
+
+private:
+   string _mensaje;
+   Fecha _fecha;
+   Horario _horario;
+};
+
+Recordatorio::Recordatorio( Fecha f, Horario h, string mensaje):_mensaje(mensaje),_fecha(f),_horario(h) {}
+
+
+Horario Recordatorio::horario() {
+    return _horario;
+}
+
+Fecha Recordatorio::fecha(){
+    return _fecha;
+}
+
+string Recordatorio::mensaje() {
+    return _mensaje;
+}
+
+
+ostream& operator<<(ostream& os, Recordatorio r) {
+    os <<  r.mensaje() << " @ " << r.fecha() << " "<< r.horario();
+    return os;
+}
+
+
+
 
 // Clase Recordatorio
 
